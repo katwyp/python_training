@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
-from address import Address
+from model.address import Address
 
 
 class TestAddAddress(unittest.TestCase):
