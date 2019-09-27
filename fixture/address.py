@@ -9,41 +9,30 @@ class AddressHelper:
         wd = self.app.wd
         # init address addition
         wd.find_element_by_link_text("add new").click()
-        # fill address form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(address.firstname)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(address.lastname)
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(address.company)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address.address)
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(address.mobile)
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(address.email)
+        self.fill_address_form(address)
         # submit address addition
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def edit_first(self, address):
+    def fill_address_form(self, address):
+        self.change_field_value("firstname", address.firstname)
+        self.change_field_value("lastname", address.lastname)
+        self.change_field_value("company", address.company)
+        self.change_field_value("address", address.address)
+        self.change_field_value("mobile", address.mobile)
+        self.change_field_value("email", address.email)
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def edit_first(self, new_address_data):
         wd = self.app.wd
         # find first address to edit
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        # edit address
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(address.firstname)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(address.lastname)
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(address.company)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address.address)
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(address.mobile)
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(address.email)
+        self.fill_address_form(new_address_data)
         # submit address update
         wd.find_element_by_name("update").click()
 

@@ -2,7 +2,12 @@
 from model.address import Address
 
 
-def test_edit_first_address(app):
+def test_edit_first_address_firstname(app):
     app.session.login(username="admin", password="secret")
-    app.address.edit_first(Address(firstname="edited", lastname="edited", company="edited", address="edited", mobile="edited", email="edited"))
+    app.address.edit_first(Address(firstname="edited"))
+    app.session.logout()
+
+def test_edit_first_address_company(app):
+    app.session.login(username="admin", password="secret")
+    app.address.edit_first(Address(company="edited"))
     app.session.logout()
