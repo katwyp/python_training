@@ -7,6 +7,7 @@ class AddressHelper:
 
     def add_new(self, address):
         wd = self.app.wd
+        self.app.open_home_page()
         # init address addition
         wd.find_element_by_link_text("add new").click()
         self.fill_address_form(address)
@@ -30,6 +31,7 @@ class AddressHelper:
 
     def edit_first(self, new_address_data):
         wd = self.app.wd
+        self.app.open_home_page()
         # find first address to edit
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_address_form(new_address_data)
@@ -38,6 +40,7 @@ class AddressHelper:
 
     def delete_first(self):
         wd = self.app.wd
+        self.app.open_home_page()
         # select first address
         wd.find_element_by_name("selected[]").click()
         # submit deletion
