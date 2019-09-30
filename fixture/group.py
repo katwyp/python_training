@@ -7,15 +7,14 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        if not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0):
+            wd.find_element_by_link_text("groups").click()
 
     def create(self, group):
         wd = self.app.wd
-        # init group creation
         self.open_groups_page()
         wd.find_element_by_name("new").click()
         self.fill_group_form(group)
-        # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
@@ -37,7 +36,6 @@ class GroupHelper:
         self.select_first_group()
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_data)
-        # submit group edition
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
 
@@ -48,9 +46,7 @@ class GroupHelper:
     def delete_first(self):
         wd = self.app.wd
         self.open_groups_page()
-        # select first group
         self.select_first_group()
-        # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
 
