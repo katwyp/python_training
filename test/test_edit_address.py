@@ -9,8 +9,8 @@ def test_edit_first_address_firstname(app):
     address = Address(firstname="edited")
     address.id, address.lastname = old_addresses[0].id, old_addresses[0].lastname
     app.address.edit_first(address)
+    assert len(old_addresses) == app.address.count()
     new_addresses = app.address.get_address_list()
-    assert len(old_addresses) == len(new_addresses)
     old_addresses[0] = address
     old = sorted(old_addresses, key=Address.id_or_max)
     new = sorted(new_addresses, key=Address.id_or_max)
