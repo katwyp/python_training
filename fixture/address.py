@@ -29,21 +29,27 @@ class AddressHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def edit_first(self, new_address_data):
+    def edit_by_index(self, index, new_address_data):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_address_form(new_address_data)
         wd.find_element_by_name("update").click()
         self.address_cache = None
 
-    def delete_first(self):
+    def edit_first(self):
+        self.edit_by_index(0)
+
+    def delete_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.address_cache = None
+
+    def delete_first(self):
+        self.delete_by_index(0)
 
     def count(self):
         wd = self.app.wd
