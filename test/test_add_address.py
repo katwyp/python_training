@@ -4,7 +4,9 @@ from model.address import Address
 
 def test_add_address(app):
     old_addresses = app.address.get_address_list()
-    address = Address(firstname="new", lastname="new")
+    address = Address(firstname="new3", lastname="new3", address="new 4, 777777 new",
+                      homephone="123556789", mobile="600808600", workphone="293394467", secondaryphone="097767432",
+                      email="neeew@new.pl", email2="neeew2@new2.pl", email3="neeew3@new3.pl")
     app.address.add_new(address)
     assert len(old_addresses) + 1 == app.address.count()
     new_addresses = app.address.get_address_list()

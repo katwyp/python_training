@@ -9,7 +9,7 @@ def test_edit_some_address_firstname(app):
     old_addresses = app.address.get_address_list()
     index = randrange(len(old_addresses))
     address = Address(firstname="edited")
-    address.id, address.lastname = old_addresses[index].id, old_addresses[0].lastname
+    address.id, address.lastname = old_addresses[index].id, old_addresses[index].lastname
     app.address.edit_by_index(index, address)
     assert len(old_addresses) == app.address.count()
     new_addresses = app.address.get_address_list()
