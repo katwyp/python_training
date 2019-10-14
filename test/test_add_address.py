@@ -10,15 +10,15 @@ def random_string(prefix, maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-def random_number(maxlen):
+def random_number(prefix, maxlen):
     symbols = "+" + "(" + ")" + " " + string.digits
-    return "".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-def random_email(maxlen):
+def random_email(prefix, maxlen):
     symbols = "_" + "." + string.digits + string.ascii_letters
-    return "".join([random.choice(symbols) for i in range (random.randrange(maxlen))]) + "@" + \
-           "".join([random.choice(string.ascii_lowercase) for i in range (random.randrange(maxlen))]) + ".pl"
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))]) + "@" + \
+           "".join([random.choice(string.ascii_lowercase) for i in range(random.randrange(maxlen))]) + ".pl"
 
 
 testdata = [Address(firstname="", lastname="", address="", homephone="", mobile="", workphone="", secondaryphone="",
@@ -26,14 +26,14 @@ testdata = [Address(firstname="", lastname="", address="", homephone="", mobile=
     Address(firstname=random_string("firstname", 10),
             lastname=random_string("lastname", 15),
             address=random_string("address", 30),
-            homephone=random_number(14), mobile=random_number(14), workphone=random_number(14),
-            secondaryphone=random_number(14),
-            email=random_email(10), email2=random_email(10), email3=random_email(10))
+            homephone=random_number("+48", 14), mobile=random_number("+48", 14), workphone=random_number("+48", 14),
+            secondaryphone=random_number("+48", 14),
+            email=random_email("email", 10), email2=random_email("email", 10), email3=random_email("email", 10))
     for i in range(5)
 ]
 
 
-@pytest.mark.parametrized("address", testdata, ids=[repr(x) for x in testdata])
+@pytest.mark.parametrize("address", testdata, ids=[repr(x) for x in testdata])
 def test_add_address(app, address):
     old_addresses = app.address.get_address_list()
     app.address.add_new(address)
