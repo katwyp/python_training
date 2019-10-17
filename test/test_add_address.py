@@ -2,8 +2,8 @@
 from model.address import Address
 
 
-def test_add_address(app, json_address):
-    address = json_address
+def test_add_address(app, json_addresses):
+    address = json_addresses
     old_addresses = app.address.get_address_list()
     app.address.add_new(address)
     assert len(old_addresses) + 1 == app.address.count()

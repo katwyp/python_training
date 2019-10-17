@@ -14,12 +14,13 @@ def test_random_address_on_home_page(app):
 
 
 def test_phones_on_address_view_page(app):
-    address_from_view_page = app.address.get_address_from_view_page(0)
-    address_from_edit_page = app.address.get_address_info_from_edit_page(0)
-    assert address_from_view_page.homephone == address_from_edit_page.homephone
-    assert address_from_view_page.workphone == address_from_edit_page.workphone
-    assert address_from_view_page.mobile == address_from_edit_page.mobile
-    assert address_from_view_page.secondaryphone == address_from_edit_page.secondaryphone
+    index = randrange(app.address.count())
+    address_from_edit_page = app.address.get_address_info_from_edit_page(index)
+    address_from_view_page = app.address.get_address_from_view_page(index)
+    assert address_from_edit_page.homephone == address_from_view_page.homephone
+    assert address_from_edit_page.workphone == address_from_view_page.workphone
+    assert address_from_edit_page.mobile == address_from_view_page.mobile
+    assert address_from_edit_page.secondaryphone == address_from_view_page.secondaryphone
 
 
 def clear(s):
