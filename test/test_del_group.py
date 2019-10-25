@@ -1,4 +1,5 @@
 from model.group import Group
+from test.test_db_matches_ui import test_group_list
 import random
 
 
@@ -8,9 +9,9 @@ def test_delete_some_group(app, db, check_ui):
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
     app.group.delete_by_id(group.id)
-    assert len(old_groups) - 1 == len(db.get_group_list())
     new_groups = db.get_group_list()
+    assert len(old_groups) - 1 == len(new_groups)
     old_groups.remove(group)
     assert old_groups == new_groups
     if check_ui:
-        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+        test_group_list(app, db)

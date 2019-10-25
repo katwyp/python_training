@@ -42,6 +42,13 @@ class AddressHelper:
         wd.find_element_by_name("update").click()
         self.address_cache = None
 
+    def edit_by_id(self, id, new_address_data):
+        wd = self.app.wd
+        self.open_address_to_edit_by_id(id)
+        self.fill_address_form(new_address_data)
+        wd.find_element_by_name("update").click()
+        self.address_cache = None
+
     def view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -56,6 +63,15 @@ class AddressHelper:
         wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.address_cache = None
+
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_xpath("//tr[@name='entry']//input[@value='%s']" % id).click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.app.open_home_page()
         self.address_cache = None
 
     def delete_first(self):
@@ -90,6 +106,11 @@ class AddressHelper:
         wd = self.app.wd
         self.app.open_home_page()
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
+    def open_address_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_xpath("//a[contains(@href, 'edit.php?id=%s')]" % id).click()
 
     def get_address_info_from_edit_page(self, index):
         wd = self.app.wd
