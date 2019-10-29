@@ -23,13 +23,13 @@ def test_phones_on_address_view_page(app):
     assert address_from_edit_page.secondaryphone == address_from_view_page.secondaryphone
 
 
-def clear(s):
+def clear_phone(s):
     return re.sub("[() -]", "", s)
 
 
 def merge_phones_like_on_home_page(address):
     return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x),
+                            map(lambda x: clear_phone(x),
                                 filter(lambda x: x is not None,
                                        [address.homephone, address.mobile, address.workphone,
                                         address.secondaryphone]))))
