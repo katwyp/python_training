@@ -19,6 +19,18 @@ def test_address_list(app, db):
     assert sorted(ui_list, key=Address.id_or_max) == sorted(db_list, key=Address.id_or_max)
 
 
+def test_all_addresses_on_home_page(app, db):
+    index = 0
+    for address in db.get_address_list():
+        address_from_home_page = sorted(app.address.get_address_list(), key=Address.id_or_max)[index]
+        address_from_db = sorted(db.get_address_list(), key=Address.id_or_max)[index]
+        assert address_from_home_page.firstname == clear_string(address_from_db.firstname).strip()
+        assert address_from_home_page.lastname == clear_string(address_from_db.lastname).strip()
+        assert address_from_home_page.address == clear_string(address_from_db.address).strip()
+        assert address_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(address_from_db)
+        assert address_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(address_from_db)
+
+
 def test_random_address_on_home_page(app, db):
     index = randrange(len(db.get_address_list()))
     address_from_home_page = sorted(app.address.get_address_list(), key=Address.id_or_max)[index]
