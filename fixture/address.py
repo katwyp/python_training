@@ -107,6 +107,13 @@ class AddressHelper:
         self.app.open_home_page()
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
 
+    def add_address_to_group(self, address_id, group_id):
+        wd = self.app.wd
+        self.open_address_to_edit_by_id(address_id)
+        # wybrać z listy grupę po id
+        wd.find_element_by_name("update").click()
+        self.address_cache = None
+
     def open_address_to_edit_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
