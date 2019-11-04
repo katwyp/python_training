@@ -54,9 +54,6 @@ class AddressHelper:
         self.app.open_home_page()
         wd.find_elements_by_xpath("//img[@alt='Details']")[index].click()
 
-    def edit_first(self):
-        self.edit_by_index(0)
-
     def delete_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -68,11 +65,15 @@ class AddressHelper:
     def delete_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_xpath("//tr[@name='entry']//input[@value='%s']" % id).click()
+        self.check_by_id(id)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.app.open_home_page()
         self.address_cache = None
+
+    def check_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//tr[@name='entry']//input[@value='%s']" % id).click()
 
     def delete_first(self):
         self.delete_by_index(0)
@@ -109,10 +110,20 @@ class AddressHelper:
 
     def add_address_to_group(self, address_id, group_id):
         wd = self.app.wd
-        self.open_address_to_edit_by_id(address_id)
-        # wybrać z listy grupę po id
-        wd.find_element_by_name("update").click()
+        self.app.open_home_page()
+        self.check_by_id(address_id)
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_xpath("//select[@name='to_group']//option[@value='%s']" % group_id).click()
+        wd.find_element_by_name("add").click()
         self.address_cache = None
+
+    def delete_address_from_group(self, address_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_xpath("//select[@name='group']").click()
+        wd.find_element_by_xpath("//select[@name='group']//option[@value='%s']" % group_id).click()
+        self.check_by_id(address_id)
+        wd.find_element_by_name("remove").click()
 
     def open_address_to_edit_by_id(self, id):
         wd = self.app.wd
