@@ -20,10 +20,12 @@ def test_address_list(app, db):
 
 
 def test_all_addresses_on_home_page(app, db):
+    address_list_from_ui = sorted(app.address.get_address_list(), key=Address.id_or_max)
+    address_list_from_db = sorted(db.get_address_list(), key=Address.id_or_max)
     index = 0
     for address in db.get_address_list():
-        address_from_home_page = sorted(app.address.get_address_list(), key=Address.id_or_max)[index]
-        address_from_db = sorted(db.get_address_list(), key=Address.id_or_max)[index]
+        address_from_home_page = address_list_from_ui[index]
+        address_from_db = address_list_from_db[index]
         assert address_from_home_page.firstname == clear_string(address_from_db.firstname).strip()
         assert address_from_home_page.lastname == clear_string(address_from_db.lastname).strip()
         assert address_from_home_page.address == clear_string(address_from_db.address).strip()
